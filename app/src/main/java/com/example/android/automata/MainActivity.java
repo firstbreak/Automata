@@ -16,6 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout rootLayout;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     TextView state;
     String initialState, finalStates[];
     Boolean isDrawn = false;
+    List<EditText> qi = new ArrayList<EditText>(), symbol= new ArrayList<EditText>(), qf= new ArrayList<EditText>();
+    ArrayList<String> initialStates = new ArrayList<>(), symbols=new ArrayList<>(), finalState = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +71,87 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        definition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transitionDiagram();
+//                Intent intent = new Intent(MainActivity.this,Definition.class);
+//                startActivity(intent);
+            }
+        });
+        diagram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transitionDiagram();
+//                Intent intent = new Intent(MainActivity.this,TransitionDiagram.class);
+//                startActivity(intent);
+            }
+        });
+        simulation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transitionDiagram();
+//                Intent intent = new Intent(MainActivity.this,Simulation.class);
+//                startActivity(intent);
+            }
+        });
 
     }
 
+    public void transitionDiagram(){
+        for (int i=0;i<qi.size();++i){
+            EditText editText = qi.get(i);
+            String str = editText.getText().toString().trim();
+            Boolean flag = false;
+            for (int j=0;j<size;++j){
+                if (str.equals(states[j])){
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == false){
+                Toast.makeText(MainActivity.this,"Enter correct states in the transition table",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            initialStates.add(str);
+        }
+
+        for (int i=0;i<symbol.size();++i){
+            EditText editText = symbol.get(i);
+            String str = editText.getText().toString().trim();
+            Boolean flag = false;
+//            for (int j=0;j<size;++j){
+//                if (str.equals(states[j])){
+//                    flag = true;
+//                    break;
+//                }
+//            }
+//            if (flag == false){
+//                Toast.makeText(MainActivity.this,"Enter correct states in the transition table",Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+            symbols.add(str);
+        }
+
+        for (int i=0;i<qf.size();++i){
+            EditText editText = qf.get(i);
+            String str = editText.getText().toString().trim();
+            Boolean flag = false;
+            for (int j=0;j<size;++j){
+                if (str.equals(states[j])){
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == false){
+                Toast.makeText(MainActivity.this,"Enter correct states in the transition table",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            finalState.add(str);
+        }
+
+
+    }
 
     public void setValidateAction(final EditText edit_action, final EditText noofstates) {
         edit_action.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -171,6 +253,14 @@ public class MainActivity extends AppCompatActivity {
                     l1.setHintTextColor(Color.WHITE);
                     l1.setHint("_________");
                     l1.setPadding(15,15,15,15);
+                    switch (j){
+                        case 0: qi.add(l1);
+                        break;
+                        case 1: symbol.add(l1);
+                        break;
+                        case 2: qf.add(l1);
+                        break;
+                    }
                     rows[i].addView(l1);
             }
         }
