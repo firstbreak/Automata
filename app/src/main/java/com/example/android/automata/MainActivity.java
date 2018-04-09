@@ -1,154 +1,200 @@
 package com.example.android.automata;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.GridView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
-    int counter = 1;
+    LinearLayout rootLayout;
+    LinearLayout[] rows;
+    Button button, definition, diagram, simulation;
+    int size = 0;
+    String states[] = {"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9"};
+    EditText transitions, initial, fin;
+  //  final EditText noofstates;
+    TextView state;
+    String initialState, finalStates[];
+    Boolean isDrawn = false;
 
-    //CustomGrid adapter;
-    static int colum = 2;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        rootLayout = findViewById(R.id.rootLayout);
+       // button1 = findViewById(R.id.button1);
+        button = findViewById(R.id.draw);
+        definition = findViewById(R.id.definition);
+        diagram =  findViewById(R.id.diagram);
+        simulation =  findViewById(R.id.simulation);
+        transitions = findViewById(R.id.transitions);
+        final EditText noofstates = findViewById(R.id.no_of_states);
+        state = findViewById(R.id.states);
+        initial = findViewById(R.id.initial_state);
+        fin = findViewById(R.id.final_state);
 
-    public static GridView gridview;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        adapter = new CustomGrid(MainActivity.this);
-//        gridview = (GridView) findViewById(R.id.gridview);
-//
-//        gridview.setNumColumns(2);
-//
-//        gridview.setAdapter(adapter);
-//    }
-//
-//
-//    public class CustomGrid extends BaseAdapter {
-//        private Context mContext;
-//        CustomGrid adgg;
-//        int mNumColumns = 2;
-//        private Random rand = new Random();
-//        GridView gg;
-//        int color = Color.argb(255, rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
-//        float alfa = 0.1f;
-//        int rand_ind = rand.nextInt((2 * 2) - 0) + 0;
-//
-//        public CustomGrid(Context c) {
-//            mContext = c;
-//            // this.Imageid = Imageid;
-//            // this.web = web;
+        setValidateAction(initial, noofstates);
+        setValidateAction(fin, noofstates);
+        setValidateAction(transitions, noofstates);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validationSuccess(noofstates)){
+                    enter(noofstates);
+                }
+                else {
+                    Toast.makeText(MainActivity.this,"Please enter the no of states",Toast.LENGTH_SHORT).show();
+                }
+                if (validationSuccess(transitions)){
+                    drawtable();
+                }
+                else {
+                    Toast.makeText(MainActivity.this, "Please enter the number of transitions",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+    }
+
+
+    public void setValidateAction(final EditText edit_action, final EditText noofstates) {
+        edit_action.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus && noofstates.getText().length()==0){
+                    noofstates.requestFocus();
+                }
+            }
+        });
+    }
+    public void enter(final EditText noofstates){
+        int no = 0;
+        String stat = noofstates.getEditableText().toString().trim();
+        if (stat !=null)
+        no = Integer.valueOf(stat);
+        if (no<1 || no>10){
+            Toast.makeText(MainActivity.this,"Please enter values in the range!",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String ans = states[0];
+        for (int i=1;i<no;++i){
+            ans = ans + ", " + states[i];
+        }
+        state.setText(ans);
+    }
+
+    private Boolean validationSuccess(EditText editText) {
+        if (editText.getText().toString().equalsIgnoreCase("")) {
+            return false;
+        }
+        return true;
+    }
+
+        public void drawtable(){
+        if (isDrawn==false)
+        isDrawn = true;
+        else {
+            //((ViewGroup) rootLayout.getParent()).removeView(rootLayout);
+            isDrawn = true;
+            return;
+        }
+        rootLayout = findViewById(R.id.rootLayout);
+        initialState = initial.getEditableText().toString();
+        String temp = fin.getEditableText().toString();
+        finalStates = temp.split(",");
+//        for (int i=0;i<finalStates.length;++i){
+//            finalStates[i] = finalStates[i].trim();
+//            Log.d("tag",finalStates[i]);
 //        }
-//
-//        @Override
-//        public int getCount() {
-//            // TODO Auto-generated method stub
-//            return mNumColumns * mNumColumns;
-//        }
-//
-//        @Override
-//        public Object getItem(int position) {
-//            // TODO Auto-generated method stub
-//            return null;
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            // TODO Auto-generated method stub
-//            return 0;
-//        }
-//
-//        @Override
-//        public View getView(final int position, View convertView, ViewGroup parent) {
-//            // TODO Auto-generated method stub
-//
-//            View gridView;
-//
-//            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            View grid = new View(mContext);
-//            grid = inflater.inflate(R.layout.layout, null);
-//            final View imageView = (ImageView) grid.findViewById(R.id.image_grid);
-//
-//            if (convertView == null) {
-//                if (position == rand_ind) {
-//                    imageView.setBackgroundColor(getColorWithAlpha(color, alfa));
-//                } else {
-//                    imageView.setBackgroundColor(color);
-//                }
-//            } else {
-//                grid = (View) convertView;
-//            }
-//
-//            grid.setOnClickListener(new View.OnClickListener() {
-//
-//                @Override
-//                public void onClick(View v) {
-//
-//
-//                    if (position == rand_ind) {
-//
-//                        // Correct postion click time if condition occur..........
-//
-//
-//                        if (counter == 2) {
-//                            mNumColumns = mNumColumns + 1;
-//                            alfa = alfa + 0.1f;
-//                        } else if (counter == 6) {
-//                            mNumColumns = mNumColumns + 1;
-//                            alfa = alfa + 0.08f;
-//                        } else if (counter == 8) {
-//                            mNumColumns = mNumColumns + 1;
-//                            alfa = alfa + 0.1f;
-//                        } else if (counter == 12) {
-//                            mNumColumns = mNumColumns + 1;
-//                            alfa = alfa + 0.1f;
-//                        } else if (counter == 14) {
-//                            mNumColumns = mNumColumns + 1;
-//                            alfa = alfa + 0.1f;
-//                        } else if (counter == 16) {
-//                            mNumColumns = mNumColumns + 1;
-//                            alfa = alfa + 0.1f;
-//                        } else if (counter == 18) {
-//                            mNumColumns = mNumColumns + 1;
-//                            alfa = alfa + 0.05f;
-//                        } else if (counter >= 18) {
-//                            // mNumColumns = mNumColumns + 1;
-//                            alfa = 0.8f;
-//
-//                        }
-//
-//                        gridview.setNumColumns(mNumColumns);
-//                        gridview.setAdapter(adapter);
-//                        adapter.notifyDataSetChanged();
-//
-//                        rand_ind = rand.nextInt((mNumColumns * mNumColumns) - 0) + 0;
-//
-//                    } else {
-//
-//                        // Here code for nagative click............ whem click
-//                        // nagative at time geanarate this code.........
-//                    }
-//                }
-//            });
-//
-//            return grid;
-//        }
-//
-//        public int getColorWithAlpha(int color, float ratio) {
-//            int newColor = 0;
-//            int alpha = Math.round(Color.alpha(color) * ratio);
-//            int r = Color.red(color);
-//            int g = Color.green(color);
-//            int b = Color.blue(color);
-//            newColor = Color.argb(alpha, r, g, b);
-//            return newColor;
-//        }
-//    }
-//
-//    @Override
-//    public void onClick(View v) {
-//    }
+        String s = transitions.getEditableText().toString();
+
+        size = Integer.valueOf(s)+1;
+        if (size<1 || size>25){
+            Toast.makeText(MainActivity.this,"Please enter a value in the range!",Toast.LENGTH_SHORT).show();
+        }
+        Log.d("tag",size+"");
+        rows = new LinearLayout[size];
+        for (int i = 0; i < size; ++i) {
+            LinearLayout linearLayout = new LinearLayout(MainActivity.this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100, 1);
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            linearLayout.setLayoutParams(params);
+            if (i==0)
+            linearLayout.setBackgroundColor(getResources().getColor(R.color.dark_red));
+            else linearLayout.setBackgroundColor(Color.BLACK);
+            rows[i] = linearLayout;
+            rootLayout.addView(linearLayout);
+        }
+
+        TextView l = new TextView(MainActivity.this);
+        l.setText("Initial State");
+        l.setTextSize(15);
+        l.setTextColor(Color.WHITE);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+        l.setLayoutParams(params);
+        l.setPadding(15,15,15,15);
+        rows[0].addView(l);
+        TextView m = new TextView(MainActivity.this);
+        m.setText("Current Symbol");
+        m.setLayoutParams(params);
+        m.setTextSize(15);
+        m.setTextColor(Color.WHITE);
+        m.setPadding(15,15,15,15);
+        rows[0].addView(m);
+        TextView n = new TextView(MainActivity.this);
+        n.setText("Final State");
+        n.setLayoutParams(params);
+        n.setTextSize(15);
+        n.setTextColor(Color.WHITE);
+        n.setPadding(15,15,15,15);
+        rows[0].addView(n);
+        for (int i=1;i<size;++i){
+            for (int j=0;j<3;++j){
+                EditText l1 = new EditText(MainActivity.this);
+                    LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
+                    l1.setLayoutParams(params1);
+                    l1.setBackgroundColor(Color.BLACK);
+                    l1.setTextColor(Color.WHITE);
+                    l1.setHintTextColor(Color.WHITE);
+                    l1.setHint("_________");
+                    l1.setPadding(15,15,15,15);
+                    rows[i].addView(l1);
+            }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.reset:
+                Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }
-

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#484848"
     tools:context=".MainActivity">
 
     <!--<com.john.waveview.WaveView-->
@@ -15,8 +16,7 @@
     
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:background="#484848">
+        android:layout_height="600dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -188,19 +188,23 @@
                 android:textColor="@android:color/white"
                 android:layout_margin="5dp"
                 android:padding="2dp"
-                android:id="@+id/diagram"
-                android:text="View Transition Diagram"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:padding="2dp"
-                android:background="@android:color/black"
-                android:textColor="@android:color/white"
-                android:layout_margin="5dp"
                 android:id="@+id/definition"
-                android:text="View Transition Diagram"/>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Definition"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:padding="2dp"
+                android:background="@android:color/black"
+                android:textColor="@android:color/white"
+                android:layout_margin="5dp"
+                android:id="@+id/diagram"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Transition Diagram"/>
 
             <Button
                 android:layout_width="0dp"
@@ -208,10 +212,12 @@
                 android:layout_weight="1"
                 android:padding="2dp"
                 android:layout_margin="5dp"
-                android:id="@+id/visualize"
+                android:id="@+id/simulation"
                 android:background="@android:color/black"
                 android:textColor="@android:color/white"
-                android:text="View Transition Diagram"/>
+                android:text="Simulation"
+                android:layout_gravity="center"
+                android:gravity="center"/>
 
         </LinearLayout>
         <TextView
