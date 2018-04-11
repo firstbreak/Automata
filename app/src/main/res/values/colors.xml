@@ -5,4 +5,10 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="holo_purple">#ff702e8c</color>
     <color name="dark_red">#78002e</color>
+    <color name="purple">#673ab7</color>
+    <color name="purple_dark">#320b86</color>
+    <color name="purple_light">#9a67ea</color>
+    <color name="orange">#ff3d00</color>
+    <color name="orange_light">#ff7539</color>
+    <color name="orange_dark">#c30000</color>
 </resources>

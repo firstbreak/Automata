@@ -7,6 +7,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="diagram" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/purple_light</item>
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purple_dark</item>
+    </style>
     <!--<style name="Theme.Styled" parent="@style/Theme.AppCompat.Light">-->
         <!--<item name="actionBarItemBackground">@drawable/selectable_background</item>-->
         <!--<item name="actionBarTabStyle">@style/Widget.Styled.ActionBar.TabView</item>-->

@@ -26,4 +26,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.github.john990:WaveView:v0.9'
+    implementation 'org.giwi:android-network-graph:0.0.1'
 }

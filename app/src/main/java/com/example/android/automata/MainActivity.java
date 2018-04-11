@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 transitionDiagram();
 //                Intent intent = new Intent(MainActivity.this,Definition.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putStringArrayList("Initial", initialStates);
+//                bundle.putStringArrayList("Symbols", symbols);
+//                bundle.putStringArrayList("Final", finalState);
+//                intent.putExtras(bundle);
 //                startActivity(intent);
             }
         });
@@ -83,16 +89,26 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 transitionDiagram();
-//                Intent intent = new Intent(MainActivity.this,TransitionDiagram.class);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this,TransitionDiagram.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("Initial", initialStates);
+                bundle.putStringArrayList("Symbols", symbols);
+                bundle.putStringArrayList("Final", finalState);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         simulation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 transitionDiagram();
-//                Intent intent = new Intent(MainActivity.this,Simulation.class);
-//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this,SimulationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("Initial", initialStates);
+                bundle.putStringArrayList("Symbols", symbols);
+                bundle.putStringArrayList("Final", finalState);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
@@ -197,10 +213,10 @@ public class MainActivity extends AppCompatActivity {
         initialState = initial.getEditableText().toString();
         String temp = fin.getEditableText().toString();
         finalStates = temp.split(",");
-//        for (int i=0;i<finalStates.length;++i){
-//            finalStates[i] = finalStates[i].trim();
-//            Log.d("tag",finalStates[i]);
-//        }
+        for (int i=0;i<finalStates.length;++i){
+            finalStates[i] = finalStates[i].trim();
+            Log.d("tag",finalStates[i]);
+        }
         String s = transitions.getEditableText().toString();
 
         size = Integer.valueOf(s)+1;
