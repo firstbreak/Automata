@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">Automata</string>
+    <string name="app_name">Automata Simulator</string>
+    <string name="definition">Definition</string>
+    <string name="transition">Transition</string>
+    <string name="simulation">Simulation</string>
 </resources>

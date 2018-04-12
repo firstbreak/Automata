@@ -18,9 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TransitionDiagram"  android:theme="@style/diagram" />
-        <activity android:name=".SimulationActivity" />
-        <activity android:name=".DefinitionActivity"></activity>
+        <activity android:name=".TransitionDiagram"  android:theme="@style/diagram" android:label="@string/transition"/>
+        <activity android:name=".SimulationActivity" android:theme="@style/simulation" android:label="@string/simulation"/>
+        <activity android:name=".DefinitionActivity" android:theme="@style/definition" android:label="@string/definition"></activity>
     </application>
 
 </manifest>

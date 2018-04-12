@@ -24,12 +24,12 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout rootLayout;
     LinearLayout[] rows;
-    Button button, definition, diagram, simulation;
-    int size = 0;
+    Button button,button1, definition, diagram, simulation;
+    int size = 0, noofstate = 0;
     String states[] = {"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9"};
     EditText transitions, initial, fin;
   //  final EditText noofstates;
-    TextView state;
+    TextView state, textView;
     String initialState, finalStates[];
     Boolean isDrawn = false;
     List<EditText> qi = new ArrayList<EditText>(), symbol= new ArrayList<EditText>(), qf= new ArrayList<EditText>();
@@ -40,13 +40,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         rootLayout = findViewById(R.id.rootLayout);
-       // button1 = findViewById(R.id.button1);
+        button1 = findViewById(R.id.button1);
         button = findViewById(R.id.draw);
         definition = findViewById(R.id.definition);
         diagram =  findViewById(R.id.diagram);
         simulation =  findViewById(R.id.simulation);
         transitions = findViewById(R.id.transitions);
+        textView = findViewById(R.id.text);
         final EditText noofstates = findViewById(R.id.no_of_states);
+//        String str = noofstates.getEditableText().toString().trim();
+//        noofstate = Integer.getInteger(str);
         state = findViewById(R.id.states);
         initial = findViewById(R.id.initial_state);
         fin = findViewById(R.id.final_state);
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         setValidateAction(initial, noofstates);
         setValidateAction(fin, noofstates);
         setValidateAction(transitions, noofstates);
+
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,31 +71,39 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (validationSuccess(transitions)){
                     drawtable();
+                    textView.setVisibility(View.VISIBLE);
                 }
                 else {
                     Toast.makeText(MainActivity.this, "Please enter the number of transitions",Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
         definition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transitionDiagram();
-//                Intent intent = new Intent(MainActivity.this,Definition.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putStringArrayList("Initial", initialStates);
-//                bundle.putStringArrayList("Symbols", symbols);
-//                bundle.putStringArrayList("Final", finalState);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
+                boolean flag = transitionDiagram();
+                if (flag==false) return;
+                Intent intent = new Intent(MainActivity.this,DefinitionActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("size",size);
+                bundle.putInt("noofstates",noofstate);
+                bundle.putStringArrayList("Initial", initialStates);
+                bundle.putStringArrayList("Symbols", symbols);
+                bundle.putStringArrayList("Final", finalState);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         diagram.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transitionDiagram();
+                boolean flag = transitionDiagram();
+                if (flag==false) return;
                 Intent intent = new Intent(MainActivity.this,TransitionDiagram.class);
                 Bundle bundle = new Bundle();
+                bundle.putInt("size",size);
+                bundle.putInt("noofstates",noofstate);
                 bundle.putStringArrayList("Initial", initialStates);
                 bundle.putStringArrayList("Symbols", symbols);
                 bundle.putStringArrayList("Final", finalState);
@@ -101,9 +114,13 @@ public class MainActivity extends AppCompatActivity {
         simulation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transitionDiagram();
+                boolean flag = transitionDiagram();
+                if (flag==false) return;
                 Intent intent = new Intent(MainActivity.this,SimulationActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putInt("size",size);
+
+                bundle.putInt("noofstates",noofstate);
                 bundle.putStringArrayList("Initial", initialStates);
                 bundle.putStringArrayList("Symbols", symbols);
                 bundle.putStringArrayList("Final", finalState);
@@ -112,9 +129,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        initial.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (hasWindowFocus()){
+                    enter(noofstates);
+                }
+            }
+        });
+
     }
 
-    public void transitionDiagram(){
+    public boolean transitionDiagram(){
         for (int i=0;i<qi.size();++i){
             EditText editText = qi.get(i);
             String str = editText.getText().toString().trim();
@@ -127,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (flag == false){
                 Toast.makeText(MainActivity.this,"Enter correct states in the transition table",Toast.LENGTH_SHORT).show();
-                return;
+                return false;
             }
             initialStates.add(str);
         }
@@ -161,12 +187,12 @@ public class MainActivity extends AppCompatActivity {
             }
             if (flag == false){
                 Toast.makeText(MainActivity.this,"Enter correct states in the transition table",Toast.LENGTH_SHORT).show();
-                return;
+                return false;
             }
             finalState.add(str);
         }
 
-
+        return true;
     }
 
     public void setValidateAction(final EditText edit_action, final EditText noofstates) {
@@ -201,27 +227,56 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-        public void drawtable(){
+    public boolean drawtable(){
         if (isDrawn==false)
         isDrawn = true;
         else {
             //((ViewGroup) rootLayout.getParent()).removeView(rootLayout);
             isDrawn = true;
-            return;
+            return false;
         }
         rootLayout = findViewById(R.id.rootLayout);
         initialState = initial.getEditableText().toString();
+        if (initialState.equals("")){
+            Toast.makeText(MainActivity.this, "Enter a valid initial state",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        boolean flag = false;
+        for (int i=0;i<noofstate;++i){
+            if (initialState.equals(states[i])){
+                flag = true;
+                break;
+            }
+        }
+//        if (flag == false){
+//            Toast.makeText(MainActivity.this, "Enter a valid initialstate",Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         String temp = fin.getEditableText().toString();
         finalStates = temp.split(",");
         for (int i=0;i<finalStates.length;++i){
             finalStates[i] = finalStates[i].trim();
             Log.d("tag",finalStates[i]);
         }
-        String s = transitions.getEditableText().toString();
+//        for (int j=0;j<finalStates.length;++j){
+//            flag = false;
+//            for (int i=0;i<noofstate;++i){
+//                if (finalStates[j].equals(states[i])){
+//                    flag = true;
+//                    break;
+//                }
+//            }
+//            if (flag == false){
+//                Toast.makeText(MainActivity.this, "Enter a valid final state",Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
+//        }
 
+        String s = transitions.getEditableText().toString();
         size = Integer.valueOf(s)+1;
         if (size<1 || size>25){
             Toast.makeText(MainActivity.this,"Please enter a value in the range!",Toast.LENGTH_SHORT).show();
+            return false;
         }
         Log.d("tag",size+"");
         rows = new LinearLayout[size];
@@ -280,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
                     rows[i].addView(l1);
             }
         }
+        return true;
     }
 
     @Override
