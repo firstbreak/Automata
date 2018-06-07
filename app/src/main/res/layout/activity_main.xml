@@ -68,7 +68,7 @@
               android:layout_margin="3dp"
               android:textSize="20sp"
               android:textColor="@android:color/white"
-              android:text="States are: "/>
+              android:text="The states are: "/>
 
             <TextView
                 android:layout_width="match_parent"

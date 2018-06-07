@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#484848"
+    tools:context=".PDA">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="600dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="Number of states: "
+                    android:textColor="@android:color/white"
+                    android:layout_margin="3dp"
+                    android:textSize="20sp"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:id="@+id/no_of_states"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="3dp"
+                    android:textSize="20sp"
+                    android:inputType="number"
+                    android:hint="Range: 1- 10"
+                    android:textColorHint="#a4a4a4"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button1"
+                    android:visibility="invisible"
+                    android:layout_margin="5dp"
+                    android:onClick="go"
+                    android:background="@android:color/black"
+                    android:textColor="@android:color/white"
+                    android:text="Enter"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white"
+                    android:text="The states are: "/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/states"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Initial state: "
+                    android:textColor="@android:color/white"
+                    android:layout_margin="3dp"
+                    android:textSize="20sp"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/initial_state"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="3dp"
+                    android:inputType="textPhonetic"
+                    android:hint="Enter initial state"
+                    android:textSize="20sp"
+                    android:textColorHint="#a4a4a4"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Final states: "
+                    android:textColor="@android:color/white"
+                    android:layout_margin="3dp"
+                    android:textSize="20sp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/final_state"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="3dp"
+                    android:hint="Enter comma separated final states"
+                    android:textSize="20sp"
+                    android:textColorHint="#a4a4a4"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Number of transitions: "
+                    android:textColor="@android:color/white"
+                    android:layout_margin="3dp"
+                    android:textSize="20sp"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/transitions"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="3dp"
+                    android:inputType="number"
+                    android:hint="Range: 1 - 25"
+                    android:textSize="20sp"
+                    android:textColorHint="#a4a4a4"/>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/draw"
+                android:text="Enter transitions"
+                android:layout_gravity="center"
+                android:padding="3dp"
+                android:layout_margin="2dp"
+                android:onClick="drawtable"
+                android:background="@android:color/black"
+                android:textColor="@android:color/white"/>
+
+            <!--<com.example.SquareImageView-->
+            <!--android:id="@+id/image_grid"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" >-->
+            <!--</com.example.SquareImageView>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rootLayout"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+            <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_margin="7dp">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/black"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="5dp"
+                    android:padding="2dp"
+                    android:id="@+id/definition"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Definition"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:background="@android:color/black"
+                    android:textColor="@android:color/white"
+                    android:layout_margin="5dp"
+                    android:id="@+id/diagram"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Transition Diagram"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:padding="2dp"
+                    android:layout_margin="5dp"
+                    android:id="@+id/simulation"
+                    android:background="@android:color/black"
+                    android:textColor="@android:color/white"
+                    android:text="Simulation"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:visibility="gone"
+                android:id="@+id/text"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+    <!--</com.john.waveview.WaveView>-->
+</LinearLayout>
