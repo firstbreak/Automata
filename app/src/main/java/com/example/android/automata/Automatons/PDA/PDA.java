@@ -1,9 +1,9 @@
-package com.example.android.automata;
+package com.example.android.automata.Automatons.PDA;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.automata.Automatons.DFA.DFA;
+import com.example.android.automata.Automatons.DFA.DefinitionActivity;
+import com.example.android.automata.Automatons.DFA.SimulationActivity;
+import com.example.android.automata.Automatons.DFA.TransitionDiagram;
+import com.example.android.automata.ConstantsClass;
+import com.example.android.automata.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +33,14 @@ public class PDA extends AppCompatActivity {
     Button button,button1, definition, diagram, simulation;
     int size = 0, noofstate = 0;
     String states[] = {"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9"};
-    EditText transitions, initial, fin;
+    EditText transitions, initial, fin, tos;
     //  final EditText noofstates;
     TextView state, textView;
     String initialState, finalStates[];
+    char topOfStack;
     Boolean isDrawn = false;
-    List<EditText> qi = new ArrayList<EditText>(), symbol= new ArrayList<EditText>(),tos = new ArrayList<>(), qf= new ArrayList<EditText>();
-    ArrayList<String> initialStates = new ArrayList<>(), symbols=new ArrayList<>(),stack=new ArrayList<>(), finalState = new ArrayList<>();
+    List<EditText> qi = new ArrayList<EditText>(), symbol= new ArrayList<EditText>(),initialStack = new ArrayList<>(), finalStack = new ArrayList<>(), qf= new ArrayList<EditText>();
+    ArrayList<String> initialStates = new ArrayList<>(), symbols=new ArrayList<>(),initialstack=new ArrayList<>(),finalstack=new ArrayList<>(), finalState = new ArrayList<>();
 
 
     @Override
@@ -53,12 +61,12 @@ public class PDA extends AppCompatActivity {
         state = findViewById(R.id.states);
         initial = findViewById(R.id.initial_state);
         fin = findViewById(R.id.final_state);
+        tos = findViewById(R.id.tos);
 
         setValidateAction(initial, noofstates);
         setValidateAction(fin, noofstates);
         setValidateAction(transitions, noofstates);
-
-
+        setValidateAction(tos,noofstates);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +94,13 @@ public class PDA extends AppCompatActivity {
 //                if (flag==false) return;
                 Intent intent = new Intent(PDA.this,DefinitionActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("size",size);
-                bundle.putInt("noofstates",noofstate);
-                bundle.putStringArrayList("Initial", initialStates);
-                bundle.putStringArrayList("Symbols", symbols);
-                bundle.putStringArrayList("Stack",stack);
-                bundle.putStringArrayList("Final", finalState);
+                bundle.putInt(ConstantsClass.Size,size);
+                bundle.putInt(ConstantsClass.NofStates,noofstate);
+                bundle.putStringArrayList(ConstantsClass.InitialStates, initialStates);
+                bundle.putStringArrayList(ConstantsClass.Symbols, symbols);
+                bundle.putStringArrayList(ConstantsClass.InitialStack,initialstack);
+                bundle.putStringArrayList(ConstantsClass.FinalStack,finalstack);
+                bundle.putStringArrayList(ConstantsClass.FinalStates, finalState);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -103,12 +112,13 @@ public class PDA extends AppCompatActivity {
                 if (flag==false) return;
                 Intent intent = new Intent(PDA.this,TransitionDiagram.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("size",size);
-                bundle.putInt("noofstates",noofstate);
-                bundle.putStringArrayList("Initial", initialStates);
-                bundle.putStringArrayList("Symbols", symbols);
-                bundle.putStringArrayList("Stack",stack);
-                bundle.putStringArrayList("Final", finalState);
+                bundle.putInt(ConstantsClass.Size,size);
+                bundle.putInt(ConstantsClass.NofStates,noofstate);
+                bundle.putStringArrayList(ConstantsClass.InitialStates, initialStates);
+                bundle.putStringArrayList(ConstantsClass.Symbols, symbols);
+                bundle.putStringArrayList(ConstantsClass.InitialStack,initialstack);
+                bundle.putStringArrayList(ConstantsClass.FinalStack,finalstack);
+                bundle.putStringArrayList(ConstantsClass.FinalStates, finalState);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -120,13 +130,13 @@ public class PDA extends AppCompatActivity {
                 if (flag==false) return;
                 Intent intent = new Intent(PDA.this,SimulationActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("size",size);
-
-                bundle.putInt("noofstates",noofstate);
-                bundle.putStringArrayList("Initial", initialStates);
-                bundle.putStringArrayList("Symbols", symbols);
-                bundle.putStringArrayList("Stack",stack);
-                bundle.putStringArrayList("Final", finalState);
+                bundle.putInt(ConstantsClass.Size,size);
+                bundle.putInt(ConstantsClass.NofStates,noofstate);
+                bundle.putStringArrayList(ConstantsClass.InitialStates, initialStates);
+                bundle.putStringArrayList(ConstantsClass.Symbols, symbols);
+                bundle.putStringArrayList(ConstantsClass.InitialStack,initialstack);
+                bundle.putStringArrayList(ConstantsClass.FinalStack,finalstack);
+                bundle.putStringArrayList(ConstantsClass.FinalStates, finalState);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -140,23 +150,23 @@ public class PDA extends AppCompatActivity {
                 }
             }
         });
-
     }
 
 
     public boolean transitionDiagram(){
+        if (!isDrawn) return false;
         for (int i=0;i<qi.size();++i){
             EditText editText = qi.get(i);
             String str = editText.getText().toString().trim();
             Boolean flag = false;
-            for (int j=0;j<size;++j){
+            for (int j=0;j<noofstate;++j){
                 if (str.equals(states[j])){
                     flag = true;
                     break;
                 }
             }
             if (flag == false){
-                Toast.makeText(PDA.this,"Enter correct states in the transition table",Toast.LENGTH_SHORT).show();
+                Toast.makeText(PDA.this,"Enter correct initial states in the transition table",Toast.LENGTH_SHORT).show();
                 return false;
             }
             initialStates.add(str);
@@ -166,29 +176,31 @@ public class PDA extends AppCompatActivity {
             EditText editText = symbol.get(i);
             String str = editText.getText().toString().trim();
             Boolean flag = false;
+            for (int j=0;j<noofstate;++j){
+                if (str.equals(states[j])){
+                    flag = true;
+                    break;
+                }
+            }
+//            if (flag == false){
+//                Toast.makeText(DFA.this,"Enter correct states in the transition table",Toast.LENGTH_SHORT).show();
+//                return false;
+//            }
             symbols.add(str);
         }
-
-        for (int i=0;i<tos.size();++i){
-            EditText editText = tos.get(i);
-            String str = editText.getText().toString().trim();
-            Boolean flag = false;
-            stack.add(str);
-        }
-
 
         for (int i=0;i<qf.size();++i){
             EditText editText = qf.get(i);
             String str = editText.getText().toString().trim();
             Boolean flag = false;
-            for (int j=0;j<size;++j){
+            for (int j=0;j<noofstate;++j){
                 if (str.equals(states[j])){
                     flag = true;
                     break;
                 }
             }
             if (flag == false){
-                Toast.makeText(PDA.this,"Enter correct states in the transition table",Toast.LENGTH_SHORT).show();
+                Toast.makeText(PDA.this,"Enter correct final states in the transition table",Toast.LENGTH_SHORT).show();
                 return false;
             }
             finalState.add(str);
@@ -196,6 +208,7 @@ public class PDA extends AppCompatActivity {
 
         return true;
     }
+
 
     public void setValidateAction(final EditText edit_action, final EditText noofstates) {
         edit_action.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -209,12 +222,15 @@ public class PDA extends AppCompatActivity {
     public void enter(final EditText noofstates){
         int no = 0;
         String stat = noofstates.getEditableText().toString().trim();
-        if (stat !=null)
-            no = Integer.valueOf(stat);
+        if (stat.equals("")){
+            Toast.makeText(PDA.this,"Please enter the no of states",Toast.LENGTH_SHORT).show();
+            return;
+        }            no = Integer.valueOf(stat);
         if (no<1 || no>10){
             Toast.makeText(PDA.this,"Please enter values in the range!",Toast.LENGTH_SHORT).show();
             return;
         }
+        noofstate = no;
         String ans = states[0];
         for (int i=1;i<no;++i){
             ans = ans + ", " + states[i];
@@ -231,6 +247,7 @@ public class PDA extends AppCompatActivity {
             isDrawn = true;
         else {
             //((ViewGroup) rootLayout.getParent()).removeView(rootLayout);
+            Toast.makeText(PDA.this,"Error! Please reset and mention all fields",Toast.LENGTH_SHORT).show();
             isDrawn = true;
             return false;
         }
@@ -247,29 +264,36 @@ public class PDA extends AppCompatActivity {
                 break;
             }
         }
-//        if (flag == false){
-//            Toast.makeText(MainActivity.this, "Enter a valid initialstate",Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
+        if (flag == false){
+            Toast.makeText(PDA.this, "Enter a valid initial state",Toast.LENGTH_SHORT).show();
+            return false;
+        }
         String temp = fin.getEditableText().toString();
         finalStates = temp.split(",");
         for (int i=0;i<finalStates.length;++i){
             finalStates[i] = finalStates[i].trim();
             Log.d("tag",finalStates[i]);
         }
-//        for (int j=0;j<finalStates.length;++j){
-//            flag = false;
-//            for (int i=0;i<noofstate;++i){
-//                if (finalStates[j].equals(states[i])){
-//                    flag = true;
-//                    break;
-//                }
-//            }
-//            if (flag == false){
-//                Toast.makeText(MainActivity.this, "Enter a valid final state",Toast.LENGTH_SHORT).show();
-//                return false;
-//            }
-//        }
+        for (int j=0;j<finalStates.length;++j){
+            flag = false;
+            for (int i=0;i<noofstate;++i){
+                if (finalStates[j].equals(states[i])){
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag == false){
+                Toast.makeText(PDA.this, "Enter a valid final state",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        //if (tos.getEditableText()!=null)
+        String t = tos.getEditableText().toString();
+        if (t.equals("")){
+            Toast.makeText(PDA.this,"Enter a valid Top of Stack character",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        topOfStack = t.charAt(0);
 
         String s = transitions.getEditableText().toString();
         size = Integer.valueOf(s)+1;
@@ -278,6 +302,8 @@ public class PDA extends AppCompatActivity {
             return false;
         }
         Log.d("tag",size+"");
+        initial.setFocusable(false);
+        fin.setFocusable(false);
         rows = new LinearLayout[size];
         for (int i = 0; i < size; ++i) {
             LinearLayout linearLayout = new LinearLayout(PDA.this);
@@ -306,13 +332,6 @@ public class PDA extends AppCompatActivity {
         m.setTextColor(Color.WHITE);
         m.setPadding(15,15,15,15);
         rows[0].addView(m);
-        TextView o = new TextView(PDA.this);
-        o.setText("Top of Stack");
-        o.setLayoutParams(params);
-        o.setTextSize(15);
-        o.setTextColor(Color.WHITE);
-        o.setPadding(15,15,15,15);
-        rows[0].addView(o);
         TextView n = new TextView(PDA.this);
         n.setText("Final State");
         n.setLayoutParams(params);
@@ -321,23 +340,21 @@ public class PDA extends AppCompatActivity {
         n.setPadding(15,15,15,15);
         rows[0].addView(n);
         for (int i=1;i<size;++i){
-            for (int j=0;j<4;++j){
+            for (int j=0;j<3;++j){
                 EditText l1 = new EditText(PDA.this);
                 LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
                 l1.setLayoutParams(params1);
                 l1.setBackgroundColor(Color.BLACK);
                 l1.setTextColor(Color.WHITE);
                 l1.setHintTextColor(Color.WHITE);
-                l1.setHint("_______");
+                l1.setHint("_________");
                 l1.setPadding(15,15,15,15);
                 switch (j){
                     case 0: qi.add(l1);
                         break;
                     case 1: symbol.add(l1);
                         break;
-                    case 2: tos.add(l1);
-                        break;
-                    case 3: qf.add(l1);
+                    case 2: qf.add(l1);
                         break;
                 }
                 rows[i].addView(l1);

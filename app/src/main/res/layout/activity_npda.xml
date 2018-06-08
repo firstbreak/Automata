@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#484848"
-    tools:context=".Automatons.PDA.PDA">
+    tools:context=".Automatons.NPDA.NPDA">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -249,5 +249,4 @@
 
 
     </ScrollView>
-    <!--</com.john.waveview.WaveView>-->
 </LinearLayout>

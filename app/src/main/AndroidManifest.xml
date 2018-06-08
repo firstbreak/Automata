@@ -12,31 +12,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         tools:replace="android:allowBackup">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".Automatons.DFA.DFA" />
         <activity
-            android:name=".TransitionDiagram"
+            android:name=".Automatons.DFA.TransitionDiagram"
             android:label="@string/transition"
             android:theme="@style/diagram" />
         <activity
-            android:name=".SimulationActivity"
+            android:name=".Automatons.DFA.SimulationActivity"
             android:label="@string/simulation"
             android:theme="@style/simulation" />
         <activity
-            android:name=".DefinitionActivity"
+            android:name=".Automatons.DFA.DefinitionActivity"
             android:label="@string/definition"
             android:theme="@style/definition" />
-        <activity android:name=".PDA"
-            android:label="Pushdown Automata">
-
-        </activity>
-        <activity android:name=".FirstActivity"
-            android:theme="@style/firstActivity">
+        <activity
+            android:name=".Automatons.PDA.PDA"
+            android:label="Pushdown Automata" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/mainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Automatons.NFA.NFA" />
+        <activity android:name=".Automatons.NPDA.NPDA"></activity>
     </application>
 
 </manifest>

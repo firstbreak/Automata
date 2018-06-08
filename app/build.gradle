@@ -49,8 +49,8 @@ dependencies {
 //    classpath 'com.google.gms:google-services:3.2.1'
 //    api 'com.github.graphstream:gs-ui-android:2.0-alpha'
 //    api 'com.github.graphstream:gs-core:2.0-alpha'
-    implementation files(':gs-ui-android')
-    implementation files(':gs-core-2.0-alpha')
+//    implementation files(':gs-ui-android')
+//    implementation files(':gs-core-2.0-alpha')
 
 }
 repositories {

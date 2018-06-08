@@ -1,27 +1,18 @@
-package com.example.android.automata;
+package com.example.android.automata.Automatons.DFA;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.google.common.graph.Graphs;
+import com.example.android.automata.ConstantsClass;
+import com.example.android.automata.R;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
 
-//import org.graphstream.graph.*;
-//import org.graphstream.graph.implementations.*;
-
-import net.xqhs.graphs.graph.Node;
-import net.xqhs.graphs.graph.SimpleEdge;
-import net.xqhs.graphs.graph.SimpleNode;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import giwi.org.networkgraph.GraphSurfaceView;
-import giwi.org.networkgraph.beans.NetworkGraph;
+//import org.graphstream.graph.*;
+//import org.graphstream.graph.implementations.*;
 //import guru.nidi.graphviz.engine.Format;
 //import guru.nidi.graphviz.engine.Graphviz;
 //import guru.nidi.graphviz.model.Graph;
@@ -29,14 +20,6 @@ import giwi.org.networkgraph.beans.NetworkGraph;
 //import static guru.nidi.graphviz.model.Factory.graph;
 //import static guru.nidi.graphviz.model.Factory.node;
 //import net.xqhs.graphs.graph.Graph;
-import net.xqhs.graphs.graph.Node;
-import net.xqhs.graphs.graph.SimpleEdge;
-import net.xqhs.graphs.graph.SimpleGraph;
-import net.xqhs.graphs.graph.SimpleNode;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 //import amicity.graphs.android.GraphView;
 //import amicity.graphs.android.common.Dimension;
@@ -52,11 +35,11 @@ public class TransitionDiagram extends AppCompatActivity {
         setContentView(R.layout.activity_transition_diagram);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        size = bundle.getInt("size");
-        noofstates = bundle.getInt("noofstates");
-        initialStates = bundle.getStringArrayList("Initial");
-        symbols = bundle.getStringArrayList("Symbols");
-        finalStates = bundle.getStringArrayList("Final");
+        size = bundle.getInt(ConstantsClass.Size);
+        noofstates = bundle.getInt(ConstantsClass.NofStates);
+        initialStates = bundle.getStringArrayList(ConstantsClass.InitialStates);
+        symbols = bundle.getStringArrayList(ConstantsClass.Symbols);
+        finalStates = bundle.getStringArrayList(ConstantsClass.FinalStates);
 
 //        NetworkGraph graph = new NetworkGraph();
 //        ArrayList<Node> nodes = new ArrayList<>();
