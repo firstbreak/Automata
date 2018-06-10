@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         tools:replace="android:allowBackup">
-        <activity android:name=".Automatons.DFA.DFA" />
+        <activity android:name=".Automatons.DFA.DFA"
+            android:label="Deterministic Finite Automata"/>
         <activity
             android:name=".Automatons.DFA.TransitionDiagram"
             android:label="@string/transition"
@@ -37,8 +38,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Automatons.NFA.NFA" />
-        <activity android:name=".Automatons.NPDA.NPDA"></activity>
+        <activity android:name=".Automatons.NFA.NFA"
+            android:label="Non-Deterministic Finite Automata"/>
+        <activity android:name=".Automatons.NPDA.NPDA"
+            android:label="Non-Deterministic Pushdown Automata"/>
+        <activity android:name=".Automatons.TuringMachine.Turing"
+            android:label="Turing machine"></activity>
     </application>
 
 </manifest>

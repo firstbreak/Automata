@@ -10,10 +10,11 @@ import com.example.android.automata.Automatons.DFA.DFA;
 import com.example.android.automata.Automatons.NFA.NFA;
 import com.example.android.automata.Automatons.NPDA.NPDA;
 import com.example.android.automata.Automatons.PDA.PDA;
+import com.example.android.automata.Automatons.TuringMachine.Turing;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView dfa,nfa,pda,npda;
+    TextView dfa,nfa,pda,npda,turing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         nfa = findViewById(R.id.nfa);
         pda = findViewById(R.id.pushdown);
         npda = findViewById(R.id.npda);
+        turing = findViewById(R.id.turing);
         dfa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,NPDA.class);
+                startActivity(intent);
+            }
+        });
+
+        turing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Turing.class);
                 startActivity(intent);
             }
         });
