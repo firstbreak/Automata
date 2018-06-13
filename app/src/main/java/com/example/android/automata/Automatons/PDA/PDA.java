@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.automata.Automatons.DFA.DFA;
 import com.example.android.automata.Automatons.DFA.DefinitionActivity;
 import com.example.android.automata.Automatons.DFA.SimulationActivity;
 import com.example.android.automata.Automatons.DFA.TransitionDiagram;
@@ -332,6 +331,13 @@ public class PDA extends AppCompatActivity {
         m.setTextColor(Color.WHITE);
         m.setPadding(15,15,15,15);
         rows[0].addView(m);
+        TextView o = new TextView(PDA.this);
+        o.setText("Stack Initial");
+        o.setLayoutParams(params);
+        o.setTextSize(15);
+        o.setTextColor(Color.WHITE);
+        o.setPadding(15,15,15,15);
+        rows[0].addView(o);
         TextView n = new TextView(PDA.this);
         n.setText("Final State");
         n.setLayoutParams(params);
@@ -339,23 +345,33 @@ public class PDA extends AppCompatActivity {
         n.setTextColor(Color.WHITE);
         n.setPadding(15,15,15,15);
         rows[0].addView(n);
+        TextView p = new TextView(PDA.this);
+        p.setText("Stack Final");
+        p.setLayoutParams(params);
+        p.setTextSize(15);
+        p.setTextColor(Color.WHITE);
+        p.setPadding(15,15,15,15);
+        rows[0].addView(p);
         for (int i=1;i<size;++i){
-            for (int j=0;j<3;++j){
+            for (int j=0;j<5;++j){
                 EditText l1 = new EditText(PDA.this);
                 LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
                 l1.setLayoutParams(params1);
                 l1.setBackgroundColor(Color.BLACK);
                 l1.setTextColor(Color.WHITE);
                 l1.setHintTextColor(Color.WHITE);
-                l1.setHint("_________");
+                l1.setHint("_____");
                 l1.setPadding(15,15,15,15);
                 switch (j){
                     case 0: qi.add(l1);
                         break;
                     case 1: symbol.add(l1);
                         break;
-                    case 2: qf.add(l1);
+                    case 2: initialStack.add(l1);
                         break;
+                    case 3: qf.add(l1);
+                        break;
+                    case 4: finalStack.add(l1);
                 }
                 rows[i].addView(l1);
             }
