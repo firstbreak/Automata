@@ -6,16 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Automatons.DFA.TransitionDiagram">
 
-    <giwi.org.networkgraph.GraphSurfaceView
-        android:id="@+id/mysurface"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:nodeBgColor="@android:color/white"
-        app:defaultColor="@android:color/black"
-        app:edgeColor="@android:color/holo_blue_light"
-        app:nodeColor="@android:color/holo_blue_light"
-        android:layout_margin="10dp"/>
+    <!--<giwi.org.networkgraph.GraphSurfaceView-->
+        <!--android:id="@+id/mysurface"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--app:nodeBgColor="@android:color/white"-->
+        <!--app:defaultColor="@android:color/black"-->
+        <!--app:edgeColor="@android:color/holo_blue_light"-->
+        <!--app:nodeColor="@android:color/holo_blue_light"-->
+        <!--android:layout_margin="10dp"/>-->
+
+    <!--<com.example.android.automata.MyView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
 
 </LinearLayout>

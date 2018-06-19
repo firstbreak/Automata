@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +16,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.example.android.automata.ConstantsClass;
 import com.example.android.automata.R;
@@ -288,9 +288,11 @@ public class DFA extends AppCompatActivity {
         initial.setFocusable(false);
         fin.setFocusable(false);
         rows = new LinearLayout[size];
+        float pixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65, getResources().getDisplayMetrics());
+
         for (int i = 0; i < size; ++i) {
             LinearLayout linearLayout = new LinearLayout(DFA.this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100, 1);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)pixel, 1);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             linearLayout.setLayoutParams(params);
             if (i==0)
@@ -300,9 +302,11 @@ public class DFA extends AppCompatActivity {
             rootLayout.addView(linearLayout);
         }
 
+        float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+
         TextView l = new TextView(DFA.this);
         l.setText("Initial State");
-        l.setTextSize(15);
+        l.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         l.setTextColor(Color.WHITE);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         l.setLayoutParams(params);

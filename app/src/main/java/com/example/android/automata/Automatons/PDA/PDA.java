@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -304,9 +305,11 @@ public class PDA extends AppCompatActivity {
         initial.setFocusable(false);
         fin.setFocusable(false);
         rows = new LinearLayout[size];
+        float pixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65, getResources().getDisplayMetrics());
+
         for (int i = 0; i < size; ++i) {
             LinearLayout linearLayout = new LinearLayout(PDA.this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100, 1);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)pixel, 1);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             linearLayout.setLayoutParams(params);
             if (i==0)
@@ -316,9 +319,11 @@ public class PDA extends AppCompatActivity {
             rootLayout.addView(linearLayout);
         }
 
+        float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+
         TextView l = new TextView(PDA.this);
         l.setText("Initial State");
-        l.setTextSize(15);
+        l.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         l.setTextColor(Color.WHITE);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         l.setLayoutParams(params);
@@ -327,28 +332,28 @@ public class PDA extends AppCompatActivity {
         TextView m = new TextView(PDA.this);
         m.setText("Current Symbol");
         m.setLayoutParams(params);
-        m.setTextSize(15);
+        m.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         m.setTextColor(Color.WHITE);
         m.setPadding(15,15,15,15);
         rows[0].addView(m);
         TextView o = new TextView(PDA.this);
         o.setText("Stack Initial");
         o.setLayoutParams(params);
-        o.setTextSize(15);
+        o.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         o.setTextColor(Color.WHITE);
         o.setPadding(15,15,15,15);
         rows[0].addView(o);
         TextView n = new TextView(PDA.this);
         n.setText("Final State");
         n.setLayoutParams(params);
-        n.setTextSize(15);
+        n.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         n.setTextColor(Color.WHITE);
         n.setPadding(15,15,15,15);
         rows[0].addView(n);
         TextView p = new TextView(PDA.this);
         p.setText("Stack Final");
         p.setLayoutParams(params);
-        p.setTextSize(15);
+        p.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         p.setTextColor(Color.WHITE);
         p.setPadding(15,15,15,15);
         rows[0].addView(p);

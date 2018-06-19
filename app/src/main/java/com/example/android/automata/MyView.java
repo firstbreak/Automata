@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
 import android.view.View;
 
 public class MyView extends View {
@@ -18,6 +20,8 @@ public class MyView extends View {
     public MyView(Context context) {
         super(context);
 
+        init(null);
+
         p = new Paint(Paint.ANTI_ALIAS_FLAG);
         p.setStrokeWidth(10);
         path = new Path();
@@ -28,13 +32,14 @@ public class MyView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         // draw first vertex
         p.setStyle(Paint.Style.FILL);
         p.setColor(Color.GREEN);
         canvas.drawCircle(point1.x, point1.y, 15, p);
 
         // draw the edge
-        path.reset();
+//        path.reset();
         path.moveTo(point1.x, point1.y);
         path.lineTo(point2.x, point2.y);
         p.setStyle(Paint.Style.STROKE);
@@ -45,5 +50,9 @@ public class MyView extends View {
         p.setStyle(Paint.Style.FILL);
         p.setColor(Color.BLUE);
         canvas.drawCircle(point2.x, point2.y, 15, p);
+    }
+
+    private void init(@Nullable AttributeSet set){
+
     }
 }

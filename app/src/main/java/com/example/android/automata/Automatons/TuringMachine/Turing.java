@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.automata.Automatons.DFA.DFA;
 import com.example.android.automata.Automatons.DFA.DefinitionActivity;
 import com.example.android.automata.Automatons.DFA.SimulationActivity;
 import com.example.android.automata.Automatons.DFA.TransitionDiagram;
@@ -327,9 +327,11 @@ public class Turing extends AppCompatActivity {
         initial.setFocusable(false);
         fin.setFocusable(false);
         rows = new LinearLayout[size];
+        float pixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65, getResources().getDisplayMetrics());
+
         for (int i = 0; i < size; ++i) {
             LinearLayout linearLayout = new LinearLayout(Turing.this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100, 1);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) pixel, 1);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             linearLayout.setLayoutParams(params);
             if (i==0)
@@ -339,41 +341,44 @@ public class Turing extends AppCompatActivity {
             rootLayout.addView(linearLayout);
         }
 
+        float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
+        float pixels1 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 7, getResources().getDisplayMetrics());
+
         TextView l = new TextView(Turing.this);
         l.setText("Initial State");
-        l.setTextSize(15);
+        l.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         l.setTextColor(Color.WHITE);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
         l.setLayoutParams(params);
-        l.setPadding(15,15,15,15);
+        l.setPadding((int) pixels,(int) pixels,(int) pixels,(int) pixels);
         rows[0].addView(l);
         TextView m = new TextView(Turing.this);
         m.setText("Current Symbol");
         m.setLayoutParams(params);
-        m.setTextSize(15);
+        m.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         m.setTextColor(Color.WHITE);
-        m.setPadding(15,15,15,15);
+        m.setPadding((int) pixels,(int) pixels,(int) pixels,(int) pixels);
         rows[0].addView(m);
         TextView n = new TextView(Turing.this);
         n.setText("Final State");
         n.setLayoutParams(params);
-        n.setTextSize(15);
+        n.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         n.setTextColor(Color.WHITE);
-        n.setPadding(15,15,15,15);
+        n.setPadding((int) pixels,(int) pixels,(int) pixels,(int) pixels);
         rows[0].addView(n);
         TextView o = new TextView(Turing.this);
         o.setText("New Symbol");
         o.setLayoutParams(params);
-        o.setTextSize(15);
+        o.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         o.setTextColor(Color.WHITE);
-        o.setPadding(15,15,15,15);
+        o.setPadding((int) pixels,(int) pixels,(int) pixels,(int) pixels);
         rows[0].addView(o);
         TextView p = new TextView(Turing.this);
-        p.setText("L/R");
+        p.setText("Direction (L/R)");
         p.setLayoutParams(params);
-        p.setTextSize(15);
+        p.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         p.setTextColor(Color.WHITE);
-        p.setPadding(15,15,15,15);
+        p.setPadding((int) pixels,(int) pixels,(int) pixels,(int) pixels);
         rows[0].addView(p);
         for (int i=1;i<size;++i){
             for (int j=0;j<5;++j){
@@ -383,7 +388,7 @@ public class Turing extends AppCompatActivity {
                 l1.setBackgroundColor(Color.BLACK);
                 l1.setTextColor(Color.WHITE);
                 l1.setHintTextColor(Color.WHITE);
-                l1.setHint("_________");
+                l1.setHint("______");
                 l1.setPadding(15,15,15,15);
                 switch (j){
                     case 0: qi.add(l1);
@@ -415,7 +420,7 @@ public class Turing extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.reset:
-                Intent intent = new Intent(Turing.this,DFA.class);
+                Intent intent = new Intent(Turing.this,Turing.class);
                 startActivity(intent);
                 return true;
 

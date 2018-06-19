@@ -3,8 +3,11 @@ package com.example.android.automata.Automatons.DFA;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.DragEvent;
+import android.view.View;
 
 import com.example.android.automata.ConstantsClass;
+import com.example.android.automata.MyView;
 import com.example.android.automata.R;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
@@ -41,6 +44,13 @@ public class TransitionDiagram extends AppCompatActivity {
         symbols = bundle.getStringArrayList(ConstantsClass.Symbols);
         finalStates = bundle.getStringArrayList(ConstantsClass.FinalStates);
 
+        MyView myView = new MyView(TransitionDiagram.this);
+        myView.setOnDragListener(new View.OnDragListener() {
+            @Override
+            public boolean onDrag(View v, DragEvent event) {
+                return true;
+            }
+        });
 //        NetworkGraph graph = new NetworkGraph();
 //        ArrayList<Node> nodes = new ArrayList<>();
 //
