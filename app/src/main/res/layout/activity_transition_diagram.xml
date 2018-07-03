@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context=".Automatons.DFA.TransitionDiagram">
+
+    <HorizontalScrollView
+        android:layout_width="320px" android:layout_height="fill_parent">
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/linlay" android:layout_width="320px"
+            android:layout_height="fill_parent" android:stretchColumns="1"
+            android:background="#000000"/>
+
+    </HorizontalScrollView>
 
     <!--<giwi.org.networkgraph.GraphSurfaceView-->
         <!--android:id="@+id/mysurface"-->
@@ -22,4 +32,4 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent" />-->
 
-</LinearLayout>
+</ScrollView>

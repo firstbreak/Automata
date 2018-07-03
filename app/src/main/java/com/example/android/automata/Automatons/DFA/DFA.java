@@ -366,6 +366,11 @@ public class DFA extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
+            case R.id.dev:
+                intent = new Intent(DFA.this,TransitionDiagram.class);
+                startActivity(intent);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

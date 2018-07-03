@@ -49,7 +49,7 @@ public class MyView extends View {
         // draw second vertex
         p.setStyle(Paint.Style.FILL);
         p.setColor(Color.BLUE);
-        canvas.drawCircle(point2.x, point2.y, 15, p);
+        canvas.drawCircle(point2.x, point2.y, 35, p);
     }
 
     private void init(@Nullable AttributeSet set){

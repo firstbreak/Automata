@@ -1,4 +1,4 @@
-package com.example.android.automata.Automatons.NFA;
+package com.example.android.automata.Automatons;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,7 +27,7 @@ import com.example.android.automata.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NFA extends AppCompatActivity {
+public class Mealy extends AppCompatActivity {
 
     LinearLayout rootLayout;
     LinearLayout[] rows;
@@ -39,12 +39,14 @@ public class NFA extends AppCompatActivity {
     TextView state, textView;
     String initialState, finalStates[];
     Boolean isDrawn = false;
-    List<EditText> qi = new ArrayList<EditText>(), symbol= new ArrayList<EditText>(), qf= new ArrayList<EditText>();
-    ArrayList<String> initialStates = new ArrayList<>(), symbols=new ArrayList<>(), finalState = new ArrayList<>();
+    List<EditText> qi = new ArrayList<EditText>(), symbol= new ArrayList<EditText>(), qf= new ArrayList<EditText>(), output=new ArrayList<>();
+    ArrayList<String> initialStates = new ArrayList<>(), symbols=new ArrayList<>(), finalState = new ArrayList<>(), finalOutput = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nfa);
+        setContentView(R.layout.activity_mealy);
         rootLayout = findViewById(R.id.rootLayout);
         button1 = findViewById(R.id.button1);
         button = findViewById(R.id.draw);
@@ -73,14 +75,14 @@ public class NFA extends AppCompatActivity {
                     enter(noofstates);
                 }
                 else {
-                    Toast.makeText(NFA.this,"Please enter the no of states",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Mealy.this,"Please enter the no of states",Toast.LENGTH_SHORT).show();
                 }
                 if (validationSuccess(transitions)){
                     drawtable();
                     textView.setVisibility(View.VISIBLE);
                 }
                 else {
-                    Toast.makeText(NFA.this, "Please enter the number of transitions",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Mealy.this, "Please enter the number of transitions",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -90,7 +92,7 @@ public class NFA extends AppCompatActivity {
             public void onClick(View v) {
 //                boolean flag = transitionDiagram();
 //                if (flag==false) return;
-                Intent intent = new Intent(NFA.this,DefinitionActivity.class);
+                Intent intent = new Intent(Mealy.this,DefinitionActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt(ConstantsClass.Size,size);
                 bundle.putInt(ConstantsClass.NofStates,noofstate);
@@ -106,7 +108,7 @@ public class NFA extends AppCompatActivity {
             public void onClick(View v) {
                 boolean flag = transitionDiagram();
                 if (flag==false) return;
-                Intent intent = new Intent(NFA.this,TransitionDiagram.class);
+                Intent intent = new Intent(Mealy.this,TransitionDiagram.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt(ConstantsClass.Size,size);
                 bundle.putInt(ConstantsClass.NofStates,noofstate);
@@ -122,7 +124,7 @@ public class NFA extends AppCompatActivity {
             public void onClick(View v) {
                 boolean flag = transitionDiagram();
                 if (flag==false) return;
-                Intent intent = new Intent(NFA.this,SimulationActivity.class);
+                Intent intent = new Intent(Mealy.this,SimulationActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt(ConstantsClass.Size,size);
                 bundle.putInt(ConstantsClass.NofStates,noofstate);
@@ -142,9 +144,9 @@ public class NFA extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    public boolean transitionDiagram(){
+    }public boolean transitionDiagram(){
+        //TODO add a check when after giving invalid state you are trying to click transition diagram
         if (!isDrawn) return false;
         for (int i=0;i<qi.size();++i){
             EditText editText = qi.get(i);
@@ -157,7 +159,7 @@ public class NFA extends AppCompatActivity {
                 }
             }
             if (flag == false){
-                Toast.makeText(NFA.this,"Enter correct initial states in the transition table",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Mealy.this,"Enter correct initial states in the transition table",Toast.LENGTH_SHORT).show();
                 return false;
             }
             initialStates.add(str);
@@ -191,7 +193,7 @@ public class NFA extends AppCompatActivity {
                 }
             }
             if (flag == false){
-                Toast.makeText(NFA.this,"Enter correct final states in the transition table",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Mealy.this,"Enter correct final states in the transition table",Toast.LENGTH_SHORT).show();
                 return false;
             }
             finalState.add(str);
@@ -213,12 +215,12 @@ public class NFA extends AppCompatActivity {
         int no = 0;
         String stat = noofstates.getEditableText().toString().trim();
         if (stat.equals("")){
-            Toast.makeText(NFA.this,"Please enter the no of states",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Mealy.this,"Please enter the no of states",Toast.LENGTH_SHORT).show();
             return;
         }
-            no = Integer.valueOf(stat);
+        no = Integer.valueOf(stat);
         if (no<1 || no>10){
-            Toast.makeText(NFA.this,"Please enter values in the range!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Mealy.this,"Please enter values in the range!",Toast.LENGTH_SHORT).show();
             return;
         }
         noofstate = no;
@@ -238,14 +240,14 @@ public class NFA extends AppCompatActivity {
             isDrawn = true;
         else {
             //((ViewGroup) rootLayout.getParent()).removeView(rootLayout);
-            Toast.makeText(NFA.this,"Error! Please reset and mention all fields",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Mealy.this,"Error! Please reset and mention all fields",Toast.LENGTH_SHORT).show();
             isDrawn = true;
             return false;
         }
         rootLayout = findViewById(R.id.rootLayout);
         initialState = initial.getEditableText().toString();
         if (initialState.equals("")){
-            Toast.makeText(NFA.this, "Enter a valid initial state",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Mealy.this, "Enter a valid initial state",Toast.LENGTH_SHORT).show();
             return false;
         }
         boolean flag = false;
@@ -256,7 +258,7 @@ public class NFA extends AppCompatActivity {
             }
         }
         if (flag == false){
-            Toast.makeText(NFA.this, "Enter a valid initial state",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Mealy.this, "Enter a valid initial state",Toast.LENGTH_SHORT).show();
             return false;
         }
         String temp = fin.getEditableText().toString();
@@ -274,7 +276,7 @@ public class NFA extends AppCompatActivity {
                 }
             }
             if (flag == false){
-                Toast.makeText(NFA.this, "Enter a valid final state",Toast.LENGTH_SHORT).show();
+                Toast.makeText(Mealy.this, "Enter a valid final state",Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -282,7 +284,7 @@ public class NFA extends AppCompatActivity {
         String s = transitions.getEditableText().toString();
         size = Integer.valueOf(s)+1;
         if (size<1 || size>25){
-            Toast.makeText(NFA.this,"Please enter a value in the range!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Mealy.this,"Please enter a value in the range!",Toast.LENGTH_SHORT).show();
             return false;
         }
         Log.d("tag",size+"");
@@ -292,7 +294,7 @@ public class NFA extends AppCompatActivity {
         float pixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 65, getResources().getDisplayMetrics());
 
         for (int i = 0; i < size; ++i) {
-            LinearLayout linearLayout = new LinearLayout(NFA.this);
+            LinearLayout linearLayout = new LinearLayout(Mealy.this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)pixel, 1);
             linearLayout.setOrientation(LinearLayout.HORIZONTAL);
             linearLayout.setLayoutParams(params);
@@ -305,7 +307,7 @@ public class NFA extends AppCompatActivity {
 
         float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
 
-        TextView l = new TextView(NFA.this);
+        TextView l = new TextView(Mealy.this);
         l.setText("Initial State");
         l.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         l.setTextColor(Color.WHITE);
@@ -313,14 +315,14 @@ public class NFA extends AppCompatActivity {
         l.setLayoutParams(params);
         l.setPadding(15,15,15,15);
         rows[0].addView(l);
-        TextView m = new TextView(NFA.this);
+        TextView m = new TextView(Mealy.this);
         m.setText("Current Symbol");
         m.setLayoutParams(params);
         m.setTextSize(15);
         m.setTextColor(Color.WHITE);
         m.setPadding(15,15,15,15);
         rows[0].addView(m);
-        TextView n = new TextView(NFA.this);
+        TextView n = new TextView(Mealy.this);
         n.setText("Final State");
         n.setLayoutParams(params);
         n.setTextSize(15);
@@ -329,7 +331,7 @@ public class NFA extends AppCompatActivity {
         rows[0].addView(n);
         for (int i=1;i<size;++i){
             for (int j=0;j<3;++j){
-                EditText l1 = new EditText(NFA.this);
+                EditText l1 = new EditText(Mealy.this);
                 LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
                 l1.setLayoutParams(params1);
                 l1.setBackgroundColor(Color.BLACK);
@@ -350,6 +352,7 @@ public class NFA extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -362,7 +365,7 @@ public class NFA extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.reset:
-                Intent intent = new Intent(NFA.this,NFA.class);
+                Intent intent = new Intent(Mealy.this,DFA.class);
                 startActivity(intent);
                 return true;
 
@@ -372,3 +375,4 @@ public class NFA extends AppCompatActivity {
     }
 
 }
+

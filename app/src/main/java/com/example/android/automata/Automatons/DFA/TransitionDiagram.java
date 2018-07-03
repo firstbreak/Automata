@@ -8,14 +8,10 @@ import android.view.View;
 
 import com.example.android.automata.ConstantsClass;
 import com.example.android.automata.MyView;
+import com.example.android.automata.Node;
 import com.example.android.automata.R;
-import com.google.common.graph.MutableValueGraph;
-import com.google.common.graph.ValueGraphBuilder;
 
 import java.util.ArrayList;
-
-//import org.graphstream.graph.*;
-//import org.graphstream.graph.implementations.*;
 //import guru.nidi.graphviz.engine.Format;
 //import guru.nidi.graphviz.engine.Graphviz;
 //import guru.nidi.graphviz.model.Graph;
@@ -29,7 +25,7 @@ import java.util.ArrayList;
 
 public class TransitionDiagram extends AppCompatActivity {
 
-    int size, noofstates;
+    int size, noofstates,nooftransitions;
     String states[] = {"q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9"};
     ArrayList<String> initialStates = new ArrayList<>(), symbols = new ArrayList<>(), finalStates = new ArrayList<>();
     @Override
@@ -38,11 +34,13 @@ public class TransitionDiagram extends AppCompatActivity {
         setContentView(R.layout.activity_transition_diagram);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        //TODO
         size = bundle.getInt(ConstantsClass.Size);
         noofstates = bundle.getInt(ConstantsClass.NofStates);
         initialStates = bundle.getStringArrayList(ConstantsClass.InitialStates);
         symbols = bundle.getStringArrayList(ConstantsClass.Symbols);
         finalStates = bundle.getStringArrayList(ConstantsClass.FinalStates);
+        nooftransitions = initialStates.size();
 
         MyView myView = new MyView(TransitionDiagram.this);
         myView.setOnDragListener(new View.OnDragListener() {
@@ -51,6 +49,37 @@ public class TransitionDiagram extends AppCompatActivity {
                 return true;
             }
         });
+
+//        Node node = new Node();
+
+        Node.MyView node = new Node.MyView(this, bundle);
+        node.setHorizontalScrollBarEnabled(true);
+        node.setVerticalScrollBarEnabled(true);
+//        ScrollView scrollView = new ScrollView(this);
+//        scrollView.addView(node);
+        View view = getLayoutInflater().inflate(R.layout.activity_transition_diagram,null); // get reference to root activity view
+//        setContentView(scrollView);
+        setContentView(node);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            float zoomFactor = 2f;
+            boolean zoomedOut = false;
+
+            @Override
+            public void onClick(View v) {
+                if(zoomedOut) {
+                    v.setScaleX(1);
+                    v.setScaleY(1);
+                    zoomedOut = false;
+                }
+                else {
+                    v.setScaleX(zoomFactor);
+                    v.setScaleY(zoomFactor);
+                    zoomedOut = true;
+                }
+            }
+        });
+
 //        NetworkGraph graph = new NetworkGraph();
 //        ArrayList<Node> nodes = new ArrayList<>();
 //
@@ -65,13 +94,14 @@ public class TransitionDiagram extends AppCompatActivity {
 //        g.addNode(n1).addNode(n2).addEdge(new SimpleEdge(n1, n2, "my-edge"));
 //
 //        Graphs graphs;
-        MutableValueGraph<String, String> graph =
-                ValueGraphBuilder.directed().allowsSelfLoops(true).build();
-
-
-        for (int i=0;i<size-1;++i){
-            graph.putEdgeValue(initialStates.get(i), symbols.get(i), finalStates.get(i));
-        }
+        //Guava
+//        MutableValueGraph<String, String> graph =
+//                ValueGraphBuilder.directed().allowsSelfLoops(true).build();
+//
+//
+//        for (int i=0;i<size-1;++i){
+//            graph.putEdgeValue(initialStates.get(i), symbols.get(i), finalStates.get(i));
+//        }
 
 //        Graph graph1 = new SingleGraph("I can see dead pixels");
 //        graph1.addNode("A" );
@@ -80,7 +110,7 @@ public class TransitionDiagram extends AppCompatActivity {
 //        graph1.addEdge("AB", "A", "B");
 //        graph1.addEdge("BC", "B", "C");
 //        graph1.addEdge("CA", "C", "A");
-//        graph.display();
+//        graph1.display();
 //        Viewer viewer = graph1.display();
 //
 //        Node v1 = new SimpleNode("18");

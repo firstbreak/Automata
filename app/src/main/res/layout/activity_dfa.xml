@@ -51,7 +51,6 @@
                 android:id="@+id/button1"
                 android:visibility="invisible"
                 android:layout_margin="5dp"
-                android:onClick="go"
                 android:background="@android:color/black"
                 android:textColor="@android:color/white"
                 android:text="Enter"/>
